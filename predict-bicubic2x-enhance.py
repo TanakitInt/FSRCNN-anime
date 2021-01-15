@@ -15,7 +15,7 @@ def predict():
     # Display weight summary
     print("Loading trained weight...")
     
-    model = load_model('my_model-srcnn-anime-tanakitint.h5')
+    model = load_model('my_model-fsrcnn-anime-tanakitint.h5')
     model.summary()
 
     BICUBIC_SCALE = 2

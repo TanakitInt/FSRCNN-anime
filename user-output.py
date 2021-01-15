@@ -84,11 +84,11 @@ try:
     # (1X) output/1-enhanced.png
     if TWO_PASS_SETTING == 0:
 
-        new_file_1 = "user-output/" + USER_FILENAME + "_srcnn-anime-1x-enhanced.png"
+        new_file_1 = "user-output/" + USER_FILENAME + "_fsrcnn-anime-1x-enhanced.png"
         
     elif TWO_PASS_SETTING == 1:
 
-        new_file_1 = "user-output/" + USER_FILENAME + "_srcnn-anime_2-PASSES_" + str(BICUBIC_SCALE) + "x-enhanced.png"
+        new_file_1 = "user-output/" + USER_FILENAME + "_fsrcnn-anime_2-PASSES_" + str(BICUBIC_SCALE) + "x-enhanced.png"
 
     else:
 
@@ -104,12 +104,12 @@ try:
     # (nX) output/1-bicubic.png
     if UP_DOWN_SETTING == 0:
 
-        new_file_2 = "user-output/" + USER_FILENAME + "_srcnn-anime-bicubic-" + str(BICUBIC_SCALE) + "x.png"
+        new_file_2 = "user-output/" + USER_FILENAME + "_fsrcnn-anime-bicubic-" + str(BICUBIC_SCALE) + "x.png"
         
         
     elif UP_DOWN_SETTING == 1:
 
-        new_file_2 = "user-output/" + USER_FILENAME + "_srcnn-anime_UPDOWN-2x_bicubic-" + str(BICUBIC_SCALE) + "x.png"
+        new_file_2 = "user-output/" + USER_FILENAME + "_fsrcnn-anime_UPDOWN-2x_bicubic-" + str(BICUBIC_SCALE) + "x.png"
 
     else:
 
@@ -125,12 +125,12 @@ try:
     # (nX) output/1-bicubic-enhanced.png
     if UP_DOWN_SETTING == 0:
 
-        new_file_3 = "user-output/" + USER_FILENAME + "_srcnn-anime-bicubic-" + str(BICUBIC_SCALE) + "x-enhanced.png"
+        new_file_3 = "user-output/" + USER_FILENAME + "_fsrcnn-anime-bicubic-" + str(BICUBIC_SCALE) + "x-enhanced.png"
         
         
     elif UP_DOWN_SETTING == 1:
 
-        new_file_3 = "user-output/" + USER_FILENAME + "_srcnn-anime_UPDOWN-2x_bicubic-" + str(BICUBIC_SCALE) + "x-enhanced.png"
+        new_file_3 = "user-output/" + USER_FILENAME + "_fsrcnn-anime_UPDOWN-2x_bicubic-" + str(BICUBIC_SCALE) + "x-enhanced.png"
 
     else:
 
@@ -146,11 +146,11 @@ try:
     # (1X) output/denoise/1-enhanced-denoised.png
     if TWO_PASS_SETTING == 0:
 
-        new_file_4 = "user-output/" + USER_FILENAME + "_srcnn-anime-1x-enhanced-denoised.png"
+        new_file_4 = "user-output/" + USER_FILENAME + "_fsrcnn-anime-1x-enhanced-denoised.png"
 
     elif TWO_PASS_SETTING == 1:
 
-        new_file_4 = "user-output/" + USER_FILENAME + "_srcnn-anime_2-PASSES_" + str(BICUBIC_SCALE) + "x-enhanced-denoised.png"
+        new_file_4 = "user-output/" + USER_FILENAME + "_fsrcnn-anime_2-PASSES_" + str(BICUBIC_SCALE) + "x-enhanced-denoised.png"
 
     else:
 
@@ -164,7 +164,7 @@ except Exception as e:
 
 try: 
     # (nX) output/denoise/1-bicubic-enhanced-denoised.png
-    new_file_5 = "user-output/" + USER_FILENAME + "_srcnn-anime-bicubic-" + str(BICUBIC_SCALE) + "x-enhanced-denoised.png"
+    new_file_5 = "user-output/" + USER_FILENAME + "_fsrcnn-anime-bicubic-" + str(BICUBIC_SCALE) + "x-enhanced-denoised.png"
     copyfile("output/denoise/1-bicubic-enhanced-denoised.png", new_file_5)
     print("File copied : " + new_file_5)
 
@@ -173,7 +173,7 @@ except Exception as e:
 
 try:
     # (nX - reinput) output/denoise/1-enhanced-denoised-final.png
-    new_file_10 = "user-output/" + USER_FILENAME + "_srcnn-anime_2-PASSES_" + str(BICUBIC_SCALE) + "x-enhanced-denoised-final.png"
+    new_file_10 = "user-output/" + USER_FILENAME + "_fsrcnn-anime_2-PASSES_" + str(BICUBIC_SCALE) + "x-enhanced-denoised-final.png"
     copyfile("output/denoise/1-enhanced-denoised-final.png", new_file_10)
     print("File copied : " + new_file_10)
 
@@ -182,7 +182,7 @@ except Exception as e:
 
 try:
     # (nX - 2X - 0.5X) output/1-bicubic-enhanced-downscaled.png
-    new_file_20 = "user-output/" + USER_FILENAME + "_srcnn-anime_UPDOWN-2x_" + str(BICUBIC_SCALE) + "x-enhanced-downscaled.png"
+    new_file_20 = "user-output/" + USER_FILENAME + "_fsrcnn-anime_UPDOWN-2x_" + str(BICUBIC_SCALE) + "x-enhanced-downscaled.png"
     copyfile("output/1-bicubic-enhanced-downscaled.png", new_file_20)
     print("File copied : " + new_file_20)
 
@@ -191,7 +191,7 @@ except Exception as e:
 
 try:
     # (nX - 2X - 0.5X) output/denoise/1-bicubic-enhanced-downscaled-denoised.png
-    new_file_21 = "user-output/" + USER_FILENAME + "_srcnn-anime_UPDOWN-2x_" + str(BICUBIC_SCALE) + "x-enhanced-downscaled-denoised.png"
+    new_file_21 = "user-output/" + USER_FILENAME + "_fsrcnn-anime_UPDOWN-2x_" + str(BICUBIC_SCALE) + "x-enhanced-downscaled-denoised.png"
     copyfile("output/denoise/1-bicubic-enhanced-downscaled-denoised.png", new_file_21)
     print("File copied : " + new_file_21)
 

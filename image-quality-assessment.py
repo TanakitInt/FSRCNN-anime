@@ -150,23 +150,23 @@ def iqa_enlargement():
 def iqa_original_compare():
 
     try:
-        # for degraded vs srcnn
+        # for degraded vs fsrcnn
         REFERENCE = 'input/1-ref.png'
         DEGRADED = 'input/1.png'
-        SRCNN = 'output/1-enhanced.png'
+        FSRCNN = 'output/1-enhanced.png'
 
         # open target and reference images
-        srcnn = cv2.imread(SRCNN)
+        fsrcnn = cv2.imread(FSRCNN)
         degraded = cv2.imread(DEGRADED)
         ref = cv2.imread(REFERENCE)
 
         # calculate score
         scores = []
         scores.append(compare_images(degraded, ref))
-        scores.append(compare_images(srcnn, ref))
+        scores.append(compare_images(fsrcnn, ref))
 
         # print image quality assessment
-        assessment_degraded = "> Image quality assessment (IQA) for degraded and SRCNN" + '\n' + \
+        assessment_degraded = "> Image quality assessment (IQA) for degraded and FSRCNN" + '\n' + \
             "For Original (Degraded) image vs Reference ---" + '\n' + \
             "Target : " + DEGRADED + '\n' + \
             "Reference : " + REFERENCE + '\n' + \
@@ -174,16 +174,16 @@ def iqa_original_compare():
             "MSE (Mean squared error) : " + str(scores[0][1]) + '\n' + \
             "SSIM (Structural similarity) : " + str(scores[0][2]) + '\n'
 
-        assessment_srcnn = '\n' + \
-            "For SRCNN vs Reference ---" + '\n' + \
-            "Target : " + SRCNN + '\n' + \
+        assessment_fsrcnn = '\n' + \
+            "For FSRCNN vs Reference ---" + '\n' + \
+            "Target : " + FSRCNN + '\n' + \
             "Reference : " + REFERENCE + '\n' + \
             "PSNR (Peak signal-to-noise ratio) : " + str(scores[1][0]) + '\n' + \
             "MSE (Mean squared error) : " + str(scores[1][1]) + '\n' + \
             "SSIM (Structural similarity) : " + str(scores[1][2]) + '\n'
 
         print(assessment_degraded)
-        print(assessment_srcnn)
+        print(assessment_fsrcnn)
         
         # display images as subplots
         fig, axs = plt.subplots(1, 3, figsize=(24, 8))
@@ -196,8 +196,8 @@ def iqa_original_compare():
         axs[1].set(xlabel = "PSNR (Peak signal-to-noise ratio) : " + str(scores[0][0]) + '\n' + \
             "MSE (Mean squared error) : " + str(scores[0][1]) + '\n' + \
             "SSIM (Structural similarity) : " + str(scores[0][2]) + '\n')
-        axs[2].imshow(cv2.cvtColor(srcnn, cv2.COLOR_BGR2RGB))
-        axs[2].set_title('SRCNN')
+        axs[2].imshow(cv2.cvtColor(fsrcnn, cv2.COLOR_BGR2RGB))
+        axs[2].set_title('FSRCNN')
         #axs[2].set_title('2 Passes')
         axs[2].set(xlabel = "PSNR (Peak signal-to-noise ratio) : " + str(scores[1][0]) + '\n' + \
             "MSE (Mean squared error) : " + str(scores[1][1]) + '\n' + \
@@ -209,7 +209,7 @@ def iqa_original_compare():
         #     ax.set_yticks([])
 
         # save in image result
-        print('Saving result for IQA for Original (Degraded) vs SRCNN in image...' + '\n')
+        print('Saving result for IQA for Original (Degraded) vs FSRCNN in image...' + '\n')
 
         fig.savefig('output/IQA-original-compare.png') 
         plt.close()
@@ -224,14 +224,14 @@ def iqa_original_compare():
 def iqa_waifu2x_compare():
 
     try:
-        # for waifu2x vs srcnn
+        # for waifu2x vs fsrcnn
         REFERENCE = 'input/1-ref.png'
         DEGRADED = 'input/1.png'
-        SRCNN = 'output/1-enhanced.png'
+        FSRCNN = 'output/1-enhanced.png'
         WAIFU2X = 'input/1-waifu2x.png'
 
         # open target and reference images
-        srcnn = cv2.imread(SRCNN)
+        fsrcnn = cv2.imread(FSRCNN)
         degraded = cv2.imread(DEGRADED)
         ref = cv2.imread(REFERENCE)
         waifu2x = cv2.imread(WAIFU2X)
@@ -239,11 +239,11 @@ def iqa_waifu2x_compare():
         # calculate score
         scores = []
         scores.append(compare_images(degraded, ref))
-        scores.append(compare_images(srcnn, ref))
+        scores.append(compare_images(fsrcnn, ref))
         scores.append(compare_images(waifu2x, ref))
 
         # print image quality assessment
-        assessment_degraded = "> Image quality assessment (IQA) for degraded, SRCNN and waifu2x" + '\n' + \
+        assessment_degraded = "> Image quality assessment (IQA) for degraded, FSRCNN and waifu2x" + '\n' + \
             "For Original (Degraded) image vs Reference ---" + '\n' + \
             "Target : " + DEGRADED + '\n' + \
             "Reference : " + REFERENCE + '\n' + \
@@ -251,9 +251,9 @@ def iqa_waifu2x_compare():
             "MSE (Mean squared error) : " + str(scores[0][1]) + '\n' + \
             "SSIM (Structural similarity) : " + str(scores[0][2]) + '\n'
 
-        assessment_srcnn = '\n' + \
-            "For SRCNN vs Reference ---" + '\n' + \
-            "Target : " + SRCNN + '\n' + \
+        assessment_fsrcnn = '\n' + \
+            "For FSRCNN vs Reference ---" + '\n' + \
+            "Target : " + FSRCNN + '\n' + \
             "Reference : " + REFERENCE + '\n' + \
             "PSNR (Peak signal-to-noise ratio) : " + str(scores[1][0]) + '\n' + \
             "MSE (Mean squared error) : " + str(scores[1][1]) + '\n' + \
@@ -268,7 +268,7 @@ def iqa_waifu2x_compare():
             "SSIM (Structural similarity) : " + str(scores[2][2]) + '\n'
 
         print(assessment_degraded)
-        print(assessment_srcnn)
+        print(assessment_fsrcnn)
         print(assessment_waifu2x)
         
         # display images as subplots
@@ -280,8 +280,8 @@ def iqa_waifu2x_compare():
         axs[1].set(xlabel = "PSNR (Peak signal-to-noise ratio) : " + str(scores[0][0]) + '\n' + \
             "MSE (Mean squared error) : " + str(scores[0][1]) + '\n' + \
             "SSIM (Structural similarity) : " + str(scores[0][2]) + '\n')
-        axs[2].imshow(cv2.cvtColor(srcnn, cv2.COLOR_BGR2RGB))
-        axs[2].set_title('SRCNN')
+        axs[2].imshow(cv2.cvtColor(fsrcnn, cv2.COLOR_BGR2RGB))
+        axs[2].set_title('FSRCNN')
         axs[2].set(xlabel = "PSNR (Peak signal-to-noise ratio) : " + str(scores[1][0]) + '\n' + \
             "MSE (Mean squared error) : " + str(scores[1][1]) + '\n' + \
             "SSIM (Structural similarity) : " + str(scores[1][2]) + '\n')
@@ -297,7 +297,7 @@ def iqa_waifu2x_compare():
         #     ax.set_yticks([])
 
         # save in image result
-        print('Saving result for IQA for Original (Degraded) vs SRCNN vs waifu2x in image...' + '\n')
+        print('Saving result for IQA for Original (Degraded) vs FSRCNN vs waifu2x in image...' + '\n')
 
         fig.savefig('output/IQA-waifu2x-compare.png') 
         plt.close()
