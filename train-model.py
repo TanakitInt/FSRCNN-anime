@@ -10,7 +10,7 @@ print("Keras version : " + keras.__version__)
 # import model packages
 
 from keras.models import Sequential
-from keras.layers import Conv2D, Conv2DTranspose, Input, Activation, UpSampling2D
+from keras.layers import Conv2D, Conv2DTranspose, Input, Activation, LeakyReLU
 from keras.optimizers import SGD, Adam
 from keras.callbacks import ModelCheckpoint
 from tensorflow.keras.utils import plot_model
@@ -35,27 +35,34 @@ def model():
     FSRCNN = Sequential()
     
     # add model layers
-    FSRCNN.add(Conv2D(filters=64, kernel_size = (5, 5), strides=(1,1), kernel_initializer='glorot_uniform',
-                     padding='same', use_bias=True, input_shape=(None, None, 1)))
-    FSRCNN.add(Activation("relu"))
-    FSRCNN.add(Conv2D(filters=64, kernel_size = (5, 5), strides=(1,1), kernel_initializer='glorot_uniform',
-                     padding='same', use_bias=True))
-    FSRCNN.add(Activation("relu"))
-    FSRCNN.add(Conv2D(filters=16, kernel_size = (3, 3), strides=(1,1), kernel_initializer='glorot_uniform',
-                     padding='same', use_bias=True))
-    FSRCNN.add(Activation("relu"))
-    
-    FSRCNN.add(Conv2DTranspose(filters=32, kernel_size = (3, 3), strides=(1,1), kernel_initializer='glorot_uniform',
-                     padding='same', use_bias=True))
-    FSRCNN.add(Activation("relu"))
+    FSRCNN.add(Conv2D(filters=56, kernel_size = (5, 5), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True, input_shape=(None, None, 1)))
+    FSRCNN.add(LeakyReLU(alpha=0.1))
 
-    #FSRCNN.add(UpSampling2D(size=(2,2), data_format=None, interpolation='bilinear'))
+    FSRCNN.add(Conv2D(filters=16, kernel_size = (1, 1), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
+    FSRCNN.add(LeakyReLU(alpha=0.1))
 
-    FSRCNN.add(Conv2DTranspose(filters=32, kernel_size = (3, 3), strides=(1,1), kernel_initializer='glorot_uniform',
-                     padding='same', use_bias=True))
-    FSRCNN.add(Activation("relu"))    
-    FSRCNN.add(Conv2D(filters=3, kernel_size = (1, 1), strides=(1,1), kernel_initializer='glorot_uniform',
-                     padding='same', use_bias=True))
+    FSRCNN.add(Conv2D(filters=12, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
+    FSRCNN.add(LeakyReLU(alpha=0.1))
+
+    FSRCNN.add(Conv2D(filters=12, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
+    FSRCNN.add(LeakyReLU(alpha=0.1))
+
+    FSRCNN.add(Conv2D(filters=12, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
+    FSRCNN.add(LeakyReLU(alpha=0.1))
+
+    FSRCNN.add(Conv2D(filters=12, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
+    FSRCNN.add(LeakyReLU(alpha=0.1))
+
+    FSRCNN.add(Conv2D(filters=12, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
+    FSRCNN.add(LeakyReLU(alpha=0.1))
+
+    FSRCNN.add(Conv2D(filters=12, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
+    FSRCNN.add(LeakyReLU(alpha=0.1))
+
+    FSRCNN.add(Conv2D(filters=56, kernel_size = (1, 1), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
+    FSRCNN.add(LeakyReLU(alpha=0.1))
+
+    FSRCNN.add(Conv2DTranspose(filters=1, kernel_size = (9, 9), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
     FSRCNN.add(Activation("sigmoid"))
 
     model = FSRCNN
@@ -64,7 +71,7 @@ def model():
     print("Saved model diagram.")
 
     # define optimizer
-    adam = Adam(lr=0.0003)
+    adam = Adam(lr=0.003)
     
     # compile model
     FSRCNN.compile(optimizer=adam, loss='mse', metrics=['mean_squared_error'])
