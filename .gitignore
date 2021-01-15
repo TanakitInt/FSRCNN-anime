@@ -1,3 +1,17 @@
+# Ignore -----------------
+.vscode
+__pycache__
+h5-dataset/train.h5
+h5-dataset/test.h5
+dataset/0.5-resize
+dataset/0.5-resize-enlarged
+dataset/original
+dataset/original-sharpened
+dataset/test
+dataset/test-sharpened
+
+# Template Provided -----------------
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
