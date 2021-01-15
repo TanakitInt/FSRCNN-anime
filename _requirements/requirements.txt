@@ -9,4 +9,5 @@ h5py==2.10.0
 pydotplus==2.0.2
 pydot==1.4.1
 graphviz==0.14.2
+pyparsing==2.4.7
 
