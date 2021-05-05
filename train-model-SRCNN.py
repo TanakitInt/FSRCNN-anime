@@ -28,45 +28,24 @@ from keras.utils.vis_utils import model_to_dot
 keras.utils.vis_utils.pydot = pydotplus
 #os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz 2.44.1/bin/'
 
-# define the FSRCNN model
+# define the SRCNN model
 def model():
     
     # define model type
-    FSRCNN = Sequential()
+    SRCNN = Sequential()
     
     # add model layers
-    FSRCNN.add(Conv2D(filters=56, kernel_size = (5, 5), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True, input_shape=(None, None, 1)))
-    FSRCNN.add(LeakyReLU(alpha=0.1))
+    SRCNN.add(Conv2D(filters=128, kernel_size = (9, 9), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True, input_shape=(None, None, 1)))
+    SRCNN.add(Activation("relu"))
 
-    FSRCNN.add(Conv2D(filters=16, kernel_size = (1, 1), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
-    FSRCNN.add(LeakyReLU(alpha=0.1))
+    SRCNN.add(Conv2D(filters=64, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
+    SRCNN.add(Activation("relu"))
 
-    FSRCNN.add(Conv2D(filters=12, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
-    FSRCNN.add(LeakyReLU(alpha=0.1))
+    SRCNN.add(Conv2D(filters=1, kernel_size = (5, 5), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
+    SRCNN.add(Activation("sigmoid"))
 
-    FSRCNN.add(Conv2D(filters=12, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
-    FSRCNN.add(LeakyReLU(alpha=0.1))
-
-    FSRCNN.add(Conv2D(filters=12, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
-    FSRCNN.add(LeakyReLU(alpha=0.1))
-
-    FSRCNN.add(Conv2D(filters=12, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
-    FSRCNN.add(LeakyReLU(alpha=0.1))
-
-    FSRCNN.add(Conv2D(filters=12, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
-    FSRCNN.add(LeakyReLU(alpha=0.1))
-
-    FSRCNN.add(Conv2D(filters=12, kernel_size = (3, 3), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
-    FSRCNN.add(LeakyReLU(alpha=0.1))
-
-    FSRCNN.add(Conv2D(filters=56, kernel_size = (1, 1), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
-    FSRCNN.add(LeakyReLU(alpha=0.1))
-
-    FSRCNN.add(Conv2DTranspose(filters=1, kernel_size = (9, 9), strides = (1, 1), kernel_initializer='glorot_uniform', padding='same', use_bias=True))
-    FSRCNN.add(Activation("sigmoid"))
-
-    model = FSRCNN
-    # dot_img_file = 'Diagram/fsrcnn-anime_model.png'
+    model = SRCNN
+    # dot_img_file = 'Diagram/srcnn-anime_model.png'
     # tf.keras.utils.plot_model(model, to_file=dot_img_file, show_shapes=True, dpi=120)
     # print("Saved model diagram.")
 
@@ -74,9 +53,9 @@ def model():
     adam = Adam(lr=0.003)
     
     # compile model
-    FSRCNN.compile(optimizer=adam, loss='mse', metrics=['mean_squared_error'])
+    SRCNN.compile(optimizer=adam, loss='mse', metrics=['mean_squared_error'])
     
-    return FSRCNN
+    return SRCNN
 
 def read_training_data(file):
 
@@ -95,13 +74,13 @@ def train():
 
     # ----------Training----------
     
-    fsrcnn_model = model()
-    #fsrcnn_model.load_weights("model-checkpoint/fsrcnn-anime-tanakitint-weights-improvement-00032.hdf5")
-    print(fsrcnn_model.summary())
+    srcnn_model = model()
+    #srcnn_model.load_weights("model-checkpoint/srcnn-anime-tanakitint-weights-improvement-00032.hdf5")
+    print(srcnn_model.summary())
 
     DATA_TRAIN = "h5-dataset/train.h5"
     DATA_TEST = "h5-dataset/test.h5"
-    CHECKPOINT_PATH = "model-checkpoint/fsrcnn-anime-tanakitint-weights-improvement-{epoch:05d}.hdf5"
+    CHECKPOINT_PATH = "model-checkpoint/srcnn-anime-tanakitint-weights-improvement-{epoch:05d}.hdf5"
     
     ILR_train, HR_train = read_training_data(DATA_TRAIN)
     ILR_test, HR_test = read_training_data(DATA_TEST)
@@ -111,10 +90,10 @@ def train():
     callbacks_list = [checkpoint]
 
     # fit model
-    history = fsrcnn_model.fit(ILR_train, HR_train, epochs=25, batch_size=32, callbacks=callbacks_list, validation_data=(ILR_test, HR_test))
+    history = srcnn_model.fit(ILR_train, HR_train, epochs=25, batch_size=32, callbacks=callbacks_list, validation_data=(ILR_test, HR_test))
 
     # save h5 model
-    fsrcnn_model.save("my_model-fsrcnn-anime-tanakitint.h5")
+    srcnn_model.save("my_model-srcnn-anime-tanakitint.h5")
     print("Saved h5 model to disk")
 
     # ----------Visualization----------
@@ -147,7 +126,7 @@ def train():
     plt.legend(['train', 'validate'], loc='upper right')
     
     # save fig and show
-    plt.savefig('Diagram/fsrcnn-anime_model_loss.png', dpi=120)
+    plt.savefig('Diagram/srcnn-anime_model_loss.png', dpi=120)
     plt.show()
     print("Training Fig Saved.")
 
@@ -162,7 +141,7 @@ def train():
     plt.legend(['train', 'validate'], loc='upper right')
 
     # save fig and show
-    plt.savefig('Diagram/fsrcnn-anime_model_mean_squared_error.png', dpi=120)
+    plt.savefig('Diagram/srcnn-anime_model_mean_squared_error.png', dpi=120)
     plt.show()
     print("Training Fig Saved.")
 

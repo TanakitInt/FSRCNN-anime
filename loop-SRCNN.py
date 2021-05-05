@@ -24,7 +24,7 @@ def main():
     print("\nTotal files:", len(files_in), "\n")
 
     # Load model
-    model = load_model('my_model-fsrcnn-anime-tanakitint.h5')
+    model = load_model('my_model-srcnn-anime-tanakitint.h5')
 
     # Looping through files
     count = 1
@@ -72,13 +72,13 @@ def interpol(file, model):
     img[:, : ,0] = pre[0, :, :, 0]
 
     # convert from YCrCb to BGR and save image
-    img_FSRCNN = cv2.cvtColor(img, cv2.COLOR_YCrCb2BGR)
+    img_SRCNN = cv2.cvtColor(img, cv2.COLOR_YCrCb2BGR)
 
     # write images
     cv2.imwrite(OUTPUT_NAME + "_nearest.png", img_nn)
     cv2.imwrite(OUTPUT_NAME + "_bilinear.png", img_bl)
     cv2.imwrite(OUTPUT_NAME + "_bicubic.png", img_bc)
-    cv2.imwrite(OUTPUT_NAME + "_FSRCNN.png", img_FSRCNN)
+    cv2.imwrite(OUTPUT_NAME + "_SRCNN.png", img_SRCNN)
 
 
 def IQA():
@@ -90,7 +90,7 @@ def IQA():
     folder_nn = Path('output/').rglob('*_nearest.png')
     folder_bl = Path('output/').rglob('*_bilinear.png')
     folder_bc = Path('output/').rglob('*_bicubic.png')
-    folder_FSRCNN = Path('output/').rglob('*_FSRCNN.png')
+    folder_SRCNN = Path('output/').rglob('*_SRCNN.png')
     folder_waifu2x = Path('output/').rglob('*_waifu2x.png')
 
     # Sort files
@@ -98,11 +98,11 @@ def IQA():
     f_nn = sorted([str(x) for x in folder_nn])
     f_bl = sorted([str(x) for x in folder_bl])
     f_bc = sorted([str(x) for x in folder_bc])
-    f_fsrcnn = sorted([str(x) for x in folder_FSRCNN])
+    f_srcnn = sorted([str(x) for x in folder_SRCNN])
     f_w = sorted([str(x) for x in folder_waifu2x])
 
     # Integrity Check
-    intcheck = [len(f_r), len(f_nn), len(f_bl), len(f_bc), len(f_fsrcnn), len(f_w)]
+    intcheck = [len(f_r), len(f_nn), len(f_bl), len(f_bc), len(f_srcnn), len(f_w)]
     print("Integrity Check: ", intcheck)
     total = max(intcheck)
     print("\nTotal files: ", total, "\n")
@@ -111,12 +111,12 @@ def IQA():
     results_nn = open("output_IQA/NN.csv", "w+", encoding = "utf-8")
     results_bl = open("output_IQA/BL.csv", "w+", encoding = "utf-8")
     results_bc = open("output_IQA/BC.csv", "w+", encoding = "utf-8")
-    results_fsrcnn = open("output_IQA/FSRCNN.csv", "w+", encoding = "utf-8")
+    results_srcnn = open("output_IQA/SRCNN.csv", "w+", encoding = "utf-8")
     results_waifu2x = open("output_IQA/WAIFU2X.csv", "w+", encoding = "utf-8")
     results_nn.writelines("PSNR, SSIM\n")
     results_bl.writelines("PSNR, SSIM\n")
     results_bc.writelines("PSNR, SSIM\n")
-    results_fsrcnn.writelines("PSNR, SSIM\n")
+    results_srcnn.writelines("PSNR, SSIM\n")
     results_waifu2x.writelines("PSNR, SSIM\n")
 
     # read every single image
@@ -126,14 +126,14 @@ def IQA():
         NEAREST = f_nn[i]
         BLLINEAR = f_bl[i]
         BICUBIC = f_bc[i]
-        FSRCNN = f_fsrcnn[i]
+        SRCNN = f_srcnn[i]
         WAIFU2X = f_w[i]
 
         ref = cv2.imread(REFERENCE)
         nn = cv2.imread(NEAREST)
         bl = cv2.imread(BLLINEAR)
         bc = cv2.imread(BICUBIC)
-        sr = cv2.imread(FSRCNN)
+        sr = cv2.imread(SRCNN)
         waifu2x = cv2.imread(WAIFU2X)
 
         refs = ref.shape
@@ -192,12 +192,12 @@ SSIM: %f""" %(scores[1][0], scores[1][1]))
 SSIM: %f""" %(scores[2][0], scores[2][1]))
         results_bc.writelines(str(scores[2][0]) + ", " + str(scores[2][1]) + "\n")
 
-        # FSRCNN
+        # SRCNN
         axs[4].imshow(cv2.cvtColor(sr, cv2.COLOR_BGR2RGB))
-        axs[4].set_title('FSRCNN')
+        axs[4].set_title('SRCNN')
         axs[4].set(xlabel = """PSNR: %f
 SSIM: %f""" %(scores[3][0], scores[3][1]))
-        results_fsrcnn.writelines(str(scores[3][0]) + ", " + str(scores[3][1]) + "\n")
+        results_srcnn.writelines(str(scores[3][0]) + ", " + str(scores[3][1]) + "\n")
 
         # waifu2x
         axs[5].imshow(cv2.cvtColor(waifu2x, cv2.COLOR_BGR2RGB))
@@ -223,7 +223,7 @@ SSIM: %f""" %(scores[4][0], scores[4][1]))
     results_nn.close()
     results_bl.close()
     results_bc.close()
-    results_fsrcnn.close()
+    results_srcnn.close()
     results_waifu2x.close()
 
 def psnr(target, ref):

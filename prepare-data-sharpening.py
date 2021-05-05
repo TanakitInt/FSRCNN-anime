@@ -20,6 +20,7 @@ def sharpening(path):
         cv2.imwrite("dataset/original-sharpened/{}".format(file), denoise)
 
 sharpening("dataset/original")
+print("Sharpening and Denoising Done! (Training set)")
 
 
 def sharpening_test(path):	
@@ -40,4 +41,5 @@ def sharpening_test(path):
         cv2.imwrite("dataset/test-sharpened/{}".format(file), denoise)	
 
 sharpening_test("dataset/test")
+print("Sharpening and Denoising Done! (Testing set)")
 
